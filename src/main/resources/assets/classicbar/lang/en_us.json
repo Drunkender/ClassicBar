@@ -5,6 +5,7 @@
   "classicbar.config.toughasnails": "Tough as Nails",
   "classicbar.config.thirst_was_taken": "Thirst Was Taken",
   "classicbar.config.homeostatic": "Homeostatic",
+  "classicbar.config.irons_spellbooks": "Iron's Spells 'n Spellbooks",
 
   "classicbar.configuration.title": "ClassicBar Configuration",
   "classicbar.configuration.classicbar-client": "ClassicBar Client Config",
@@ -16,6 +17,9 @@
   "classicbar.configuration.homeostatic": "Homeostatic",
   "classicbar.configuration.homeostatic.button": "Edit",
   "classicbar.configuration.homeostatic.tooltip": "Settings for Homeostatic mod integration",
+  "classicbar.configuration.irons_spellbooks": "Iron's Spells 'n Spellbooks",
+  "classicbar.configuration.irons_spellbooks.button": "Edit",
+  "classicbar.configuration.irons_spellbooks.tooltip": "Settings for Iron's Spells 'n Spellbooks mod integration",
   "classicbar.configuration.section.classicbar.client.toml": "classicbar-client.toml",
   "classicbar.configuration.section.classicbar.client.toml.title": "ClassicBar Client Config",
 
@@ -124,5 +128,8 @@
   "classicbar.config.homeostatic.homeostatic_hydration_bar_color": "Hydration Bar Color",
   "classicbar.config.homeostatic.homeostatic_hydration_bar_color.tooltip": "Hex color of the Homeostatic hydration overlay bar",
   "classicbar.config.homeostatic.show_hydration_bar": "Show Hydration Bar",
-  "classicbar.config.homeostatic.show_hydration_bar.tooltip": "Show a secondary overlay on the water bar indicating current hydration"
+  "classicbar.config.homeostatic.show_hydration_bar.tooltip": "Show a secondary overlay on the water bar indicating current hydration",
+
+  "classicbar.config.irons_spellbooks.irons_mana_bar_color": "Mana Bar Color",
+  "classicbar.config.irons_spellbooks.irons_mana_bar_color.tooltip": "Hex color of the Iron's Spells 'n Spellbooks mana bar"
 }

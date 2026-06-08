@@ -74,7 +74,12 @@ public class EventHandler implements GuiLayer {
       boolean rightHand = overlay.rightHandSide();
       try {
         overlay.render(matrices, player, screenWidth, screenHeight, getOffset(gui, rightHand));
-      } catch (Error e) {
+      } catch (Throwable e) {
+        // Changed: was catch (Error). Errors cover the missing-compat case (NoClassDefFoundError /
+        // NoSuchMethodError when an integrated mod is absent), but an overlay throwing an ordinary
+        // RuntimeException (e.g. an NPE from a compat mod's data attachment) would otherwise escape
+        // this loop and crash the entire HUD layer every frame. Catch Throwable so a single broken
+        // bar is isolated and removed instead of taking down the whole HUD.
         ClassicBar.logger().error("Removing broken overlay {}", overlay.name(), e); // NeoForge 1.21: use Logger instead of printStackTrace()
         errored.add(overlay);
       }

@@ -13,8 +13,17 @@ public record Color(int r,int g,int b) {
         return new Color(red, green, blue);
     }
 
+    /// Parses a hex color string (e.g. "#B34D00" or "0xB34D00") into a Color.
+    // Changed: previously returned BLACK unconditionally, ignoring the argument — a silent trap
+    // for any caller (no error, just black). Delegates to ColorUtils.hex2Color, the same parser
+    // used everywhere else for config color strings, so behavior is consistent. Falls back to
+    // BLACK only when the string is not a valid number, matching the old non-throwing contract.
     public static Color from(String s) {
-        return BLACK;
+        try {
+            return ColorUtils.hex2Color(s);
+        } catch (NumberFormatException e) {
+            return BLACK;
+        }
     }
 
     public void color2Gl() {
