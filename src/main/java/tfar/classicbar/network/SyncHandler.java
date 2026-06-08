@@ -38,9 +38,11 @@ public final class SyncHandler {
   private final Map<UUID, Float> lastSaturationLevels = new HashMap<>();
   private final Map<UUID, Float> lastExhaustionLevels = new HashMap<>();
 
-  // Tough as Nails
-  private final Map<UUID, Float> lastHydrationLevels = new HashMap<>();
-  private final Map<UUID, Float> lastThirstExhaustionLevels = new HashMap<>();
+  // Changed: removed lastHydrationLevels / lastThirstExhaustionLevels maps. They were never
+  // written (syncToughAsNailsData() is a no-op while TAN compat is disabled for MC 26.1) and
+  // only ever cleared, so they were dead state. When TAN compat is restored, re-add the per-player
+  // last-value tracking maps alongside the restored syncToughAsNailsData() implementation
+  // (see that method's javadoc).
 
   // Changed: was TickEvent.PlayerTickEvent with phase == Phase.END guard.
   // PlayerTickEvent.Post fires only at end-of-tick so no phase check is needed.
@@ -79,6 +81,8 @@ public final class SyncHandler {
    * Restore the original implementation (read hydration/exhaustion via
    * {@code ThirstHelper.getThirst(player)} and send {@link MessageHydrationSync} /
    * {@link MessageThirstExhaustionSync}) once a 26.1-compatible Tough As Nails build exists.
+   * When restoring, also re-add the per-player last-value tracking maps (removed as dead state)
+   * and their cleanup in {@link #onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent)}.
    */
   private void syncToughAsNailsData(ServerPlayer player) {
     // intentionally empty — see method javadoc
@@ -97,9 +101,7 @@ public final class SyncHandler {
 
     lastSaturationLevels.remove(uuid);
     lastExhaustionLevels.remove(uuid);
-    if (ModCompat.toughasnails.loaded) {
-      lastHydrationLevels.remove(uuid);
-      lastThirstExhaustionLevels.remove(uuid);
-    }
+    // Changed: removed the TAN hydration/thirst-exhaustion map cleanup — those maps no longer
+    // exist (see field declarations above). Restore alongside syncToughAsNailsData().
   }
 }

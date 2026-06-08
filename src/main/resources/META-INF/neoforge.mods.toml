@@ -29,3 +29,49 @@ Status icons are bars now
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
+
+# Optional integration dependencies. ClassicBar replaces or suppresses the HUD overlays of these
+# mods (see EventHandler.disableOtherOverlays and the mod overlays in impl/overlays/mod). They are
+# "optional" so ClassicBar still loads when they are absent, and ordering="AFTER" guarantees
+# ClassicBar's GUI layers register after theirs so its RenderGuiLayerEvent.Pre cancellation wins.
+# versionRange is left open ("[0,)") because compat is gated at runtime via ModCompat, not by version.
+
+# Overloaded Armor Bar — purely client-side HUD; ClassicBar renders layered armor colors itself.
+[[dependencies.classicbar]]
+    modId="overloadedarmorbar"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="CLIENT"
+
+# ParCool — ClassicBar suppresses ParCool's stamina HUD and draws its own stamina bar.
+[[dependencies.classicbar]]
+    modId="parcool"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="CLIENT"
+
+# Iron's Spells 'n Spellbooks — ClassicBar suppresses the mana overlay and draws mana as a bar.
+[[dependencies.classicbar]]
+    modId="irons_spellbooks"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="CLIENT"
+
+# Homeostatic — ClassicBar draws the water/hydration bar; mod has server-side data, so side=BOTH.
+[[dependencies.classicbar]]
+    modId="homeostatic"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+# Tough As Nails — ClassicBar suppresses the thirst HUD and syncs thirst data; side=BOTH.
+[[dependencies.classicbar]]
+    modId="toughasnails"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
