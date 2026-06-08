@@ -46,7 +46,7 @@ repositories {
         url = "https://maven.maxanier.de/releases"
     }
     maven {
-        url "https://cursemaven.com"
+        url = "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
@@ -67,9 +67,14 @@ dependencies {
     // compileOnly "de.teamlapen.vampirism:Vampirism:1.21-1.10.7:api"
     // compileOnly "curse.maven:vampirism-become-a-vampire-233029:${vampirism}"
     // compileOnly "curse.maven:thirst-was-taken-679270:${thirst_was_taken}"
-    // compileOnly "curse.maven:homeostatic-634466:${homeostatic}"
-    // compileOnly "curse.maven:overloaded-armor-bar-314002:${overloaded_armor_bar}"
     // compileOnly "curse.maven:irons-spells-n-spellbooks-855414:${irons_spells}"
+
+    // Re-enabled for MC 26.1.2: Overloaded Armor Bar now ships a 26.1.2 NeoForge build
+    // (file ID 7829609). ClassicBar suppresses its HUD overlay via ModCompat.overloadedArmorBar.
+    compileOnly "curse.maven:overloaded-armor-bar-314002:${overloaded_armor_bar}"
+
+    // Re-enabled for MC 26.1.2: Homeostatic now ships a 26.1-compatible build (file ID 8035546).
+    compileOnly "curse.maven:homeostatic-634466:${homeostatic}"
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -96,7 +101,7 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+            url = "file://${project.projectDir}/mcmodsrepo"
         }
     }
 }

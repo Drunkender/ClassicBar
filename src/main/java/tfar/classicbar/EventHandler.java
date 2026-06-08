@@ -1,6 +1,5 @@
 package tfar.classicbar;
 
-import javax.annotation.Nonnull;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -57,12 +56,12 @@ public class EventHandler implements GuiLayer {
   }
 
   @Override
-  public void render(@Nonnull GuiGraphicsExtractor matrices, @Nonnull DeltaTracker deltaTracker) {
+  public void render(GuiGraphicsExtractor matrices, DeltaTracker deltaTracker) {
     int screenWidth = matrices.guiWidth();
     int screenHeight = matrices.guiHeight();
     Gui gui = forgeGui();
 
-    Entity entity = ModUtils.mc.getCameraEntity();
+    Entity entity = ModUtils.mc().getCameraEntity();
     if (!(entity instanceof Player player)) return;
     if (player.getAbilities().instabuild || player.isSpectator()) return;
     // Changed: Minecraft.getProfiler() was removed in MC 26.1; use Profiler.get() instead.

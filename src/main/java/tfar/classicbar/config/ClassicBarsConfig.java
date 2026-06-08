@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("removal") // Suppressed: ModConfigSpec.Builder methods are marked for removal but no replacement exists yet in NeoForge 1.21
 // Changed: MC 26.1 / NeoForge unified the event buses; @EventBusSubscriber no longer has a
 // `bus` element (the Bus enum was removed). value = Dist.CLIENT still scopes registration.
 @EventBusSubscriber(modid = ClassicBar.MODID, value = Dist.CLIENT)
@@ -137,7 +136,12 @@ public class ClassicBarsConfig {
     frozenHealthColor = builder.translation("classicbar.config.general.frozen_health_color").define("frozen_health_color", "#7fafff"); // Changed: was frozenColors list + frozenFractions list
 
     leftorder = builder.translation("classicbar.config.general.left_order").defineList("left_order", Lists.newArrayList("health","armor","absorption","lavacharm","lavacharm2"), () -> "", String.class::isInstance);
-    rightorder = builder.translation("classicbar.config.general.right_order").defineList("right_order", Lists.newArrayList("blood","health_mount","food","thirst_level", StaminaB.name,"feathers","armor_toughness","air","flighttiara","decay"), () -> "", String.class::isInstance);
+    // Added HomeostaticWater.NAME ("homeostatic_water") to the default right-side order so the
+    // Homeostatic water/hydration bar actually renders. The overlay is registered, colored, and
+    // given default bar settings elsewhere, but cacheConfigs() only adds overlays present in
+    // leftorder/rightorder to the render list — without this entry the bar was silently inert.
+    // Placed next to "thirst_level" since it is the equivalent thirst/water need bar.
+    rightorder = builder.translation("classicbar.config.general.right_order").defineList("right_order", Lists.newArrayList("blood","health_mount","food","thirst_level",HomeostaticWater.NAME, StaminaB.name,"feathers","armor_toughness","air","flighttiara","decay"), () -> "", String.class::isInstance);
     builder.pop(); // Added: closes the "general" push above; required before pushing mod-specific sections at the top level
 
     // Tough as Nails section: only registered when toughasnails is loaded

@@ -9,7 +9,13 @@ import tfar.classicbar.impl.BarOverlayImpl;
 
 public final class ModUtils {
   private ModUtils() {} // §16: utility class — private no-arg constructor
-  public static final Minecraft mc = Minecraft.getInstance();
+  // Changed: was 'public static final Minecraft mc = Minecraft.getInstance();'. That eagerly
+  // captured the singleton at class-load time, so if ModUtils loaded before the client instance
+  // existed the field stayed permanently null (it was final), causing an NPE in EventHandler.render.
+  // Resolve the singleton lazily on each call instead so it's always current.
+  public static Minecraft mc() {
+    return Minecraft.getInstance();
+  }
   // Changed: these three Identifier constants were previously declared as private static
   // fields inside their respective overlay classes (Blood, Thirst, StaminaB) and returned by
   // their individual getIconRL() overrides. They are now centralized here so that
@@ -45,7 +51,7 @@ public final class ModUtils {
   }
 
   public static int getStringLength(String s) {
-    return mc.font.width(s);
+    return mc().font.width(s);
   }
 
   public static void drawStringOnHUD(GuiGraphicsExtractor stack, String string, int xOffset, int yOffset, int color) {
